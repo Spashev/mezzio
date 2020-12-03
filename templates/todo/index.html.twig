@@ -1,0 +1,75 @@
+{% extends "@layout/default.html.twig" %}
+
+{% block title %}Todo{% endblock %}
+
+{% block content %}
+    <center>
+        <button type="{{btn['add']['type']}}" class="{{btn['add']['class']}} float-right mb-3" data-toggle="modal" data-target="#exampleModal" style="border-radius: 50%">
+            <i class="{{btn['add']['icon']}}"></i>
+        </button>
+        <table class="table" style="margin: 20px;">
+            <thead class="thead-dark">
+                <tr>
+                {% for  key, option in forms %}
+                    {% if key =='status' %}
+                        <th scope="col">{{option['btn']['label']}}</th>
+                    {% elseif key == 'buttons' %}
+                        <th scope="col">Action</th>
+                    {% else %}
+                        <th scope="col">{{ option['label'] }}</th>
+                    {% endif %}
+                {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for task in tasks %}
+                    <tr>
+                        <td scope="row">{{task['title']}}</td>
+                        <td scope="row">{{task['description']}}</td>
+                        <td scope="row">{{task['status']}}</td>
+                        <td class="float-right">
+                            {% for button in forms['buttons'] %}
+                                <a href="{{path(button['route'], {'id':task['id']})}}" class="{{button['class']}}">
+                                    <i class="{{button['icon']}}"></i>
+                                </a>
+                            {% endfor %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Create task</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body m-3">
+                    <form action="{{ path('todo.save') }}" method="post">
+                        {% for key, option in forms %}
+                            {% if key =='status' %}
+                                <div class="form-check float-right">
+                                    <input name="{{option['btn']['id']}}" type="{{option['btn']['type']}}" class="form-check-input" id="exampleCheck1">
+                                    <label class="form-check-label" for="exampleCheck1">{{option['btn']['label']}}</label>
+                                </div>
+                            {% elseif key == 'buttons' %}
+                            {% else %}
+                                <div class="form-group row">
+                                    <label for="exampleInputEmail1">{{option['label']}}</label>
+                                    <input name="{{option['id']}}" type="{{option['type']}}" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </form>
+                </div>
+                </div>
+            </div>
+        </div>
+    </center>
+{% endblock %}
