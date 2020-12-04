@@ -13,9 +13,13 @@ $cacheConfig = [
 ];
 
 $aggregator = new ConfigAggregator([
+    \Mezzio\Authentication\Session\ConfigProvider::class,
+    \AuthUser\ConfigProvider::class,
+    \Mezzio\Csrf\ConfigProvider::class,
+    \Mezzio\Session\Ext\ConfigProvider::class,
+    \Mezzio\Session\ConfigProvider::class,
     \Zend\Router\ConfigProvider::class,
     \Zend\Validator\ConfigProvider::class,
-    // CROS, DB
     \Mezzio\Cors\ConfigProvider::class,
     \Zend\Db\ConfigProvider::class,
 

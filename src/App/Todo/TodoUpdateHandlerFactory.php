@@ -19,7 +19,7 @@ class TodoUpdateHandlerFactory
         $template = $container->has(TemplateRendererInterface::class)
             ? $container->get(TemplateRendererInterface::class)
             : null;
-
-        return new TodoUpdateHandler(get_class($container), $router, $template);
+        $adapter = $container->get('adapter');
+        return new TodoUpdateHandler(get_class($container), $router, $template, $adapter);
     }
 }

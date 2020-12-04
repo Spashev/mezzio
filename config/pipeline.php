@@ -22,6 +22,11 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
     // The error handler should be the first (most outer) middleware to catch
     // all Exceptions.
     $app->pipe(ErrorHandler::class);
+
+    //CSRF SESSION
+    $app->pipe(\Mezzio\Session\SessionMiddleware::class);
+    $app->pipe(\Mezzio\Csrf\CsrfMiddleware::class);
+    
     $app->pipe(ServerUrlMiddleware::class);
 
     // Pipe more middleware here that you want to execute on every request:
@@ -73,8 +78,4 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
     // NotFoundHandler kicks in; alternately, you can provide other fallback
     // middleware to execute.
     $app->pipe(NotFoundHandler::class);
-
-    //CROS SITE FORB...
-    $app->pipe(\Mezzio\Session\SessionMiddleware::class);
-    $app->pipe(\Mezzio\Csrf\CsrfMiddleware::class);
 };

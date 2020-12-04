@@ -51,6 +51,7 @@
                 </div>
                 <div class="modal-body m-3">
                     <form action="{{ path('todo.save') }}" method="post">
+                        <input type="hidden" name="__csrf" value="{{ __csrf }}">
                         {% for key, option in forms %}
                             {% if key =='status' %}
                                 <div class="form-check float-right">

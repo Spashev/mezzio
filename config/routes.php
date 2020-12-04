@@ -39,9 +39,14 @@ use Psr\Container\ContainerInterface;
 return static function (Application $app, MiddlewareFactory $factory, ContainerInterface $container): void {
     $app->get('/', App\Handler\HomePageHandler::class, 'home');
     $app->get('/api/ping', App\Handler\PingHandler::class, 'api.ping');
+    // TODO
     $app->get('/todo', App\Todo\TodoPageHandler::class, 'todo.index');
-    $app->post('/todo', App\Todo\TodoPageHandler::class, 'todo.save');
+    $app->post('/todo', App\Todo\TodoSaveMiddleware::class, 'todo.save');
     $app->get('/todo/{id:\d+}/edit', App\Todo\TodoUpdateHandler::class, 'todo.edit');
     $app->put('/todo/{id:\d+}/edit', App\Todo\TodoUpdateHandler::class, 'todo.update');
     $app->get('/todo/{id:\d+}', App\Todo\TodoDeleteHandler::class, 'todo.delete');
+    //Auth
+    $app->get('/login', AuthUser\Actions\LoginAction::class, 'login.index');
+    $app->post('/login', AuthUser\Actions\LoginAction::class, 'login.login');
+    $app->get('/register', AuthUser\Actions\RegistorAction::class, 'login.register');
 };
