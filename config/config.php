@@ -13,6 +13,11 @@ $cacheConfig = [
 ];
 
 $aggregator = new ConfigAggregator([
+    \Laminas\Form\ConfigProvider::class,
+    \Laminas\Hydrator\ConfigProvider::class,
+    \Laminas\InputFilter\ConfigProvider::class,
+    \Laminas\Filter\ConfigProvider::class,
+    \Mezzio\Authentication\ConfigProvider::class,
     \Mezzio\Authentication\Session\ConfigProvider::class,
     \AuthUser\ConfigProvider::class,
     \Mezzio\Csrf\ConfigProvider::class,

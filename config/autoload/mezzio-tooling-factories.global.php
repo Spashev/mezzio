@@ -13,6 +13,7 @@ declare(strict_types=1);
 return [
     'dependencies' => [
         'factories' => [
+            App\Middleware\CsrfTokenMiddleware::class => App\Middleware\CsrfTokenMiddlewareFactory::class,
             App\Todo\TodoSaveMiddleware::class => App\Todo\TodoSaveMiddlewareFactory::class,
             AuthUser\Actions\LoginAction::class => AuthUser\Actions\LoginActionFactory::class,
             AuthUser\Actions\RegistorAction::class => AuthUser\Actions\RegistorActionFactory::class,

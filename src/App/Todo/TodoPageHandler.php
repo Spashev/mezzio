@@ -83,17 +83,13 @@ class TodoPageHandler implements MiddlewareInterface
     
         $sql = new Sql($this->adapter);
 
-        $guard = $request->getAttribute(CsrfMiddleware::GUARD_ATTRIBUTE);
-        $token = $guard->generateToken();
-        $data['__csrf'] = $token;
-
         $select = $sql->select();
         $select->from('tasks');
-
         $statement = $sql->prepareStatementForSqlObject($select);
         $results = $statement->execute();
-
         $data['tasks'] = $results;
+
+        $data['__csrf'] = $request->getAttribute('session')->get('__csrf');
 
         return new HtmlResponse($this->template->render('todo::index', $data));
     }

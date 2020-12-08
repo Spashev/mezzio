@@ -26,13 +26,6 @@ class TodoSaveMiddleware implements MiddlewareInterface
         $sql = new Sql($this->adapter);
 
         $data = $request->getParsedBody();
-        $token = $data['__csrf'] ?? '';
-        
-        $guard = $request->getAttribute(CsrfMiddleware::GUARD_ATTRIBUTE);
-        
-        if (! $guard->validateToken($token)) {
-            return new EmptyResponse(419);
-        }
 
         if(!isset($data['status'])) {
             $data['status'] = 'off';

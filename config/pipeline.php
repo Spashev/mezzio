@@ -27,6 +27,8 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
     $app->pipe(\Mezzio\Session\SessionMiddleware::class);
     $app->pipe(\Mezzio\Csrf\CsrfMiddleware::class);
     
+    $app->pipe(\App\Middleware\CsrfTokenMiddleware::class);
+
     $app->pipe(ServerUrlMiddleware::class);
 
     // Pipe more middleware here that you want to execute on every request:
@@ -70,7 +72,9 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
     // - route-based authentication
     // - route-based validation
     // - etc.
-
+    // $app->pipe(Mezzio\Authentication\AuthenticationMiddleware::class);## check all route auth
+    // In the callback:
+    $app->pipe('/todo', $factory->prepare(Mezzio\Authentication\AuthenticationMiddleware::class));
     // Register the dispatch middleware in the middleware pipeline
     $app->pipe(DispatchMiddleware::class);
 

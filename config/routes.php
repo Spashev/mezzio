@@ -42,7 +42,10 @@ return static function (Application $app, MiddlewareFactory $factory, ContainerI
     // TODO
     $app->get('/todo', App\Todo\TodoPageHandler::class, 'todo.index');
     $app->post('/todo', App\Todo\TodoSaveMiddleware::class, 'todo.save');
-    $app->get('/todo/{id:\d+}/edit', App\Todo\TodoUpdateHandler::class, 'todo.edit');
+    $app->get('/todo/{id:\d+}/edit', [
+        Mezzio\Authentication\AuthenticationMiddleware::class,
+        App\Todo\TodoUpdateHandler::class
+    ], 'todo.edit');
     $app->put('/todo/{id:\d+}/edit', App\Todo\TodoUpdateHandler::class, 'todo.update');
     $app->get('/todo/{id:\d+}', App\Todo\TodoDeleteHandler::class, 'todo.delete');
     //Auth

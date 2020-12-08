@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+
 return [
     // Provides application-wide services.
     // We recommend using fully-qualified class names whenever possible as
@@ -11,6 +12,10 @@ return [
         // key is the alias name, the value is the service to which it points.
         'aliases' => [
             // Fully\Qualified\ClassOrInterfaceName::class => Fully\Qualified\ClassName::class,
+            
+            Mezzio\Authentication\UserRepositoryInterface::class => Mezzio\Authentication\UserRepository\PdoDatabase::class,
+            // Zend\Db\Adapter\AdapterInterface::class => BasicAccess::class,
+
         ],
         // Use 'invokables' for constructor-less services, or services that do
         // not require arguments to the constructor. Map a service name to the
